@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: 251 247 241;
+  --foreground: 23 17 13;
+  --card: 255 255 255;
+  --muted: 111 97 86;
+  --border: 233 223 213;
+  --accent: 181 90 34;
+  --font-sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+@theme inline {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-card: rgb(var(--card));
+  --color-muted: rgb(var(--muted));
+  --color-border: rgb(var(--border));
+  --color-accent: rgb(var(--accent));
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 243, 228, 0.95), transparent 34%),
+    radial-gradient(circle at 80% 12%, rgba(241, 205, 166, 0.28), transparent 22%),
+    linear-gradient(180deg, #fffdf9 0%, #fbf7f1 100%);
+  color: rgb(var(--foreground));
+  font-family: var(--font-sans), "Noto Sans JP", system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(181, 90, 34, 0.18);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), serif;
+}
+
+a {
+  text-decoration: none;
+}
