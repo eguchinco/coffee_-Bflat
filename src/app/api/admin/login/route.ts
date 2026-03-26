@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { adminLoginSchema } from "@/lib/validation";
-import { assertAdminSecret, getAdminToken, ADMIN_COOKIE_NAME } from "@/lib/auth";
+import {
+  ADMIN_COOKIE_NAME,
+  getAdminToken,
+  resolveAdminSecret,
+} from "@/lib/auth";
 
 export const runtime = "nodejs";
 
@@ -14,16 +18,16 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL("/admin?error=1", request.url));
   }
 
-  try {
-    assertAdminSecret(parsed.data.secret);
-  } catch {
+  const secret = resolveAdminSecret(parsed.data.secret);
+
+  if (!secret) {
     return NextResponse.redirect(new URL("/admin?error=1", request.url));
   }
 
   const response = NextResponse.redirect(new URL("/admin", request.url));
   response.cookies.set({
     name: ADMIN_COOKIE_NAME,
-    value: getAdminToken(),
+    value: getAdminToken(secret),
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -33,4 +37,3 @@ export async function POST(request: Request) {
 
   return response;
 }
-
